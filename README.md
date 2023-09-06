@@ -18,4 +18,8 @@ Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg ex
         -h, --help           display help for command
 ```
 
-## Pictures
+## Example conversion
+
+<p align="center">
+  <img src="./img/image.png" alt="Statoscope example" width="100%">
+</p>
