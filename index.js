@@ -1,7 +1,8 @@
+import boxen from "boxen";
+import chalk from "chalk";
 import fs from "fs";
 import prettier from "prettier";
-
-// 9/6/2023 COPYRIGHT @ KASPAR
+import { program } from "commander";
 
 const RegEx = {
   MATCH_STYLE: /st[0-9]{(.*?)\}/g,
@@ -26,7 +27,7 @@ const constructFinal = (data) => {
   ${data})}`;
 };
 
-const convertSvgToJsx = (path) => {
+const convertSvgToJsx = (path, output) => {
   fs.readFile(path, "utf8", async (err, data) => {
     if (err) {
       console.error(err);
@@ -96,8 +97,32 @@ const convertSvgToJsx = (path) => {
     const final = constructFinal(data);
     const formatted = await prettier.format(final, { parser: "babel" });
 
-    console.log(formatted);
+    // write to output path
+    fs.writeFile(output, formatted, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
   });
 };
 
-convertSvgToJsx("./test/sample.svg");
+const usage = boxen("Convert .svg -->.jsx", {
+  title: chalk.green("svg-to-jsx"),
+  titleAlignment: "center",
+  padding: 0.5,
+});
+
+program.name("svg-to-jsx").description(usage).version("1.0.0");
+
+program
+  .command("convert")
+  .description("Convert a Illustrator .svg to React-compatible .jsx")
+  .argument("<input>", "path to input .svg file")
+  .argument("<output>", "path for output .jsx file")
+  .action((input, output) => {
+    convertSvgToJsx(input, output);
+  });
+
+program.parse();
+
+// convertSvgToJsx("./test/sample.svg");
