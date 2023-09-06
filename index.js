@@ -100,7 +100,6 @@ const convertSvgToJsx = async (path, options) => {
     });
 
     // write to output path
-    console.log(options.output);
     if (options.output) {
       fs.writeFile(options.output, result, (err) => {
         if (err) {
