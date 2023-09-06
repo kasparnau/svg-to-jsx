@@ -6,7 +6,7 @@ Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg ex
 
 ## Usage
 
-```sh
+```
     s2j convert [options] <input>
 
     Arguments:
@@ -18,4 +18,8 @@ Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg ex
         -h, --help           display help for command
 ```
 
-## Pictures
+## Example
+left: input.svg, right: export.jsx
+<p align="center">
+  <img src="./img/image.png" alt="Statoscope example" width="100%">
+</p>
