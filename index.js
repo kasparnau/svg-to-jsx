@@ -100,8 +100,9 @@ const convertSvgToJsx = async (path, options) => {
     });
 
     // write to output path
+    console.log(options.output);
     if (options.output) {
-      fs.writeFile(output, result, (err) => {
+      fs.writeFile(options.output, result, (err) => {
         if (err) {
           console.error(err);
         }
@@ -125,9 +126,9 @@ program.name("svg-to-jsx").description(usage).version("1.0.0");
 
 program
   .command("convert")
-  .description("Convert a Illustrator .svg to React-compatible .jsx")
+  .description("Convert Illustrator .svg to React-compatible .jsx")
   .argument("<input>", "path to input .svg file")
-  .option("-o, --output", "copy to clipboard instead of output")
+  .option("-o, --output <path>", "export to output path")
   .option("-c, --copy", "copy to clipboard instead of output")
   .action(async (input, options) => {
     if (!options.output && !options.copy) {
@@ -144,5 +145,3 @@ program
   });
 
 program.parse();
-
-// convertSvgToJsx("./test/sample.svg");
