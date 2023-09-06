@@ -1,4 +1,5 @@
 import fs from "fs";
+import prettier from "prettier";
 
 // 9/6/2023 COPYRIGHT @ KASPAR
 
@@ -26,7 +27,7 @@ const constructFinal = (data) => {
 };
 
 const convertSvgToJsx = (path) => {
-  fs.readFile(path, "utf8", (err, data) => {
+  fs.readFile(path, "utf8", async (err, data) => {
     if (err) {
       console.error(err);
       return;
@@ -92,7 +93,10 @@ const convertSvgToJsx = (path) => {
 
     data = data.replaceAll(RegEx.REMAINING_STYLE, "");
 
-    console.log(constructFinal(data));
+    const final = constructFinal(data);
+    const formatted = await prettier.format(final, { parser: "babel" });
+
+    console.log(formatted);
   });
 };
 
