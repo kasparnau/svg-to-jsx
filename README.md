@@ -4,6 +4,7 @@ Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg ex
 
 ⚡ Save up to 3 minutes of repetitive work per .svg file.
 
+
 > [!WARNING]  
 > This is only intended to be used with Adobe Illustrator's svg exports.
 > There are no guarantees for it to work on any random .svg 
