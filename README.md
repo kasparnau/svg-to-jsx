@@ -6,7 +6,7 @@ Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg ex
 
 ## Usage
 
-```sh
+```
     s2j convert [options] <input>
 
     Arguments:
