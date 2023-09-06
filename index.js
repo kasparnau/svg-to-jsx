@@ -1,5 +1,6 @@
 import boxen from "boxen";
 import chalk from "chalk";
+import clipboard from "clipboardy";
 import fs from "fs";
 import prettier from "prettier";
 import { program } from "commander";
@@ -27,7 +28,7 @@ const constructFinal = (data) => {
   ${data})}`;
 };
 
-const convertSvgToJsx = (path, output) => {
+const convertSvgToJsx = async (path, options) => {
   fs.readFile(path, "utf8", async (err, data) => {
     if (err) {
       console.error(err);
@@ -94,15 +95,23 @@ const convertSvgToJsx = (path, output) => {
 
     data = data.replaceAll(RegEx.REMAINING_STYLE, "");
 
-    const final = constructFinal(data);
-    const formatted = await prettier.format(final, { parser: "babel" });
+    const result = await prettier.format(constructFinal(data), {
+      parser: "babel",
+    });
 
     // write to output path
-    fs.writeFile(output, formatted, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
+    if (options.output) {
+      fs.writeFile(output, result, (err) => {
+        if (err) {
+          console.error(err);
+        }
+      });
+    }
+
+    // copy to clipboard
+    if (options.copy) {
+      clipboard.writeSync(result);
+    }
   });
 };
 
@@ -118,9 +127,20 @@ program
   .command("convert")
   .description("Convert a Illustrator .svg to React-compatible .jsx")
   .argument("<input>", "path to input .svg file")
-  .argument("<output>", "path for output .jsx file")
-  .action((input, output) => {
-    convertSvgToJsx(input, output);
+  .option("-o, --output", "copy to clipboard instead of output")
+  .option("-c, --copy", "copy to clipboard instead of output")
+  .action(async (input, options) => {
+    if (!options.output && !options.copy) {
+      return program.error(
+        boxen(
+          `${chalk.red("Error:")} You must specify ${chalk.blue(
+            "--output"
+          )} for a file path or ${chalk.blue("--copy")} for clipboard"`
+        )
+      );
+    }
+
+    convertSvgToJsx(input, options);
   });
 
 program.parse();
