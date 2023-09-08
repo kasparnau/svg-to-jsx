@@ -23,6 +23,8 @@ Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg ex
         -h, --help           display help for command
 ```
 
+This tool is also available in my website: http://kasparnau.com/blog/svg-to-jsx
+
 ## Example
 left: input.svg, right: export.jsx
 <p align="center">
