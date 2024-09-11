@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Run tests
 on:
   push:
     branches: [main]
@@ -17,8 +17,6 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with:
-          cache: "pnpm"
 
       - name: Install pnpm
         run: npm install -g pnpm
