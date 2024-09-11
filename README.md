@@ -1,13 +1,11 @@
 # SVG to JSX converter
 
-Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg export files into fully formatted React .jsx files.
+Lightweight CLI utility tool for converting Adobe Illustrator's .svg export files into formatted React .jsx components.
 
-⚡ Save up to 3 minutes of repetitive work per .svg file.
-
+⚡ Motivation: I rather spend an hour building a tool than spend 3 minutes per SVG file doing it manually.
 
 > [!WARNING]  
-> This is only intended to be used with Adobe Illustrator's svg exports.
-> There are no guarantees for it to work on any random .svg 
+> This is intended for use with Adobe Illustrator's raw svg exports.
 
 ## Usage
 
@@ -23,24 +21,17 @@ Simple & lightweight CLI utility tool for converting Adobe Illustrator's .svg ex
         -h, --help           display help for command
 ```
 
-This tool is also available in my website: http://kasparnau.com/blog/svg-to-jsx
+## Example Usage
+Input: SVG export from Adobe Illustrator
+Output: Formatted React component
 
-## Example
-left: input.svg, right: export.jsx
 <p align="center">
   <img src="./img/image.png" alt="Statoscope example" width="100%">
 </p>
 
 ## How It Works
 
-SVG to JSX converter works by RegEx:ing all the styles from the svg's <style> tag, splitting them into individual properties, and then reconstructing the styling into inline props.
-
-Once the hard part is done, it creates a React component function with a className prop and formats it using Prettier.
-
-Now your .jsx icon is ready for you to slap into your codebase. 
-
-# To-Do:
-
-* TypeScript support
-* Mass converting
-* Utilize SVGO for optimization  
+- Deconstruct the raw SVG file into individual objects using RegEx
+- Build a React component out of the deconstructed SVG objects
+- Format the new React component using Prettier
+- ✨ Your SVG is ready to be used within your React app
