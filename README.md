@@ -21,17 +21,18 @@ Lightweight CLI utility tool for converting Adobe Illustrator's .svg export file
         -h, --help           display help for command
 ```
 
-## Example Usage
-Input: SVG export from Adobe Illustrator
-Output: Formatted React component
-
-<p align="center">
-  <img src="./img/image.png" alt="Statoscope example" width="100%">
-</p>
-
 ## How It Works
 
 - Deconstruct the raw SVG file into individual objects using RegEx
 - Build a React component out of the deconstructed SVG objects
 - Format the new React component using Prettier
 - ✨ Your SVG is ready to be used within your React app
+
+
+## Example Output
+- Input: SVG export from Adobe Illustrator
+- Output: Formatted React component
+
+<p align="center">
+  <img src="./img/image.png" alt="Statoscope example" width="100%">
+</p>
