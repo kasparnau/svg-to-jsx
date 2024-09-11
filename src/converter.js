@@ -27,90 +27,97 @@ const constructFinal = (data) => {
     ${data})}`;
 };
 
-const convertSvgToJsx = async (path, options) => {
-  fs.readFile(path, "utf8", async (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    // GET RID OF THE THE AUTO-GENERATED ILLUSTRATOR COMMENT
-    data = data.split(")  -->")[1];
-
-    // GRAB ALL STYLES FROM <style> ELEMENT
-    const stylesRaw = data.match(RegEx.MATCH_STYLE);
-
-    // SEPARATE CLASS NAME FROM STYLING
-    const styles = stylesRaw.map((styleStr) => {
-      // SELECT STYLE BY REGEXING ANYTHING THAT'S BETWEEN BRACKETS
-      let style = styleStr.match(RegEx.BETWEEN_BRACKETS)[0];
-      // REMOVE BRACKETS TO GET LIST OF STYLES SEPARATED BY SEMICOLON
-      style = style.replace(RegEx.SELECT_BRACKETS, "");
-      // TURN STYLE STRING INTO OBJECT
-      style = style.split(";");
-
-      return {
-        name: styleStr.split("{")[0],
-        style,
-      };
-    });
-
-    // GET RID OF THE <style> ELEMENT NOW THAT WE PARSED THEM INTO AN ARRAY
-    data = data.replace(RegEx.MATCH_FULL_STYLE, "");
-    data = data.replace(RegEx.MATCH_STYLE_TAG, "");
-
-    // REMOVE ALL EMPTY LINES BECAUSE THE FORMATTING IS ALREADY GONE ANYWAYS
-    // stackoverflow.com/a/31413269
-    data = data.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "");
-
-    // REPLACE ALL CLASSES WITH JSX SUPPORTED STYLE PROP
-    // IF YOU WANNA DEBUG THIS HAVE FUN, JUST KNOW IT SPITS OUT THIS: style={{opacity: 0.08, fill: "#E4ECF8"}}
-    styles.map((style) => {
-      let newStyles = style.style.map((s) => {
-        let formattedStyle = s.split(":");
-        // CONVERT TO ARRAY
-        if (isNaN(formattedStyle[1])) {
-          formattedStyle[1] = `"${formattedStyle[1].toString()}"`;
-        } else {
-          formattedStyle[1] = Number(formattedStyle[1]);
-        }
-        return formattedStyle;
-      });
-
-      let formattedStyleString = "style={{";
-      newStyles.map((s, i) => {
-        if (i > 0) formattedStyleString += ", ";
-        formattedStyleString += `${s[0]}: ${s[1]}`;
-      });
-      formattedStyleString += "}}";
-
-      data = data.replaceAll(`class="${style.name}"`, formattedStyleString);
-    });
-
-    for (let i = 0; i < ReplacePropNamesList.length; i++) {
-      let str = ReplacePropNamesList[i];
-      data = data.replaceAll(str[0], str[1]);
-    }
-
-    data = data.replaceAll(RegEx.REMAINING_STYLE, "");
-
-    const result = await prettier.format(constructFinal(data), {
-      parser: "babel",
-    });
-
-    // write to output path
-    if (options.output) {
-      fs.writeFile(options.output, result, (err) => {
+const convertSvgToJsx = async (path, options = {}) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, "utf8", async (err, data) => {
+      try {
         if (err) {
-          console.error(err);
+          return reject("Couldn't read input file");
         }
-      });
-    }
 
-    // copy to clipboard
-    if (options.copy) {
-      clipboard.writeSync(result);
-    }
+        // GET RID OF THE THE AUTO-GENERATED ILLUSTRATOR COMMENT
+        data = data.split(")  -->")[1];
+
+        // GRAB ALL STYLES FROM <style> ELEMENT
+        const stylesRaw = data.match(RegEx.MATCH_STYLE);
+
+        // SEPARATE CLASS NAME FROM STYLING
+        const styles = stylesRaw.map((styleStr) => {
+          // SELECT STYLE BY REGEXING ANYTHING THAT'S BETWEEN BRACKETS
+          let style = styleStr.match(RegEx.BETWEEN_BRACKETS)[0];
+          // REMOVE BRACKETS TO GET LIST OF STYLES SEPARATED BY SEMICOLON
+          style = style.replace(RegEx.SELECT_BRACKETS, "");
+          // TURN STYLE STRING INTO OBJECT
+          style = style.split(";");
+
+          return {
+            name: styleStr.split("{")[0],
+            style,
+          };
+        });
+
+        // GET RID OF THE <style> ELEMENT NOW THAT WE PARSED THEM INTO AN ARRAY
+        data = data.replace(RegEx.MATCH_FULL_STYLE, "");
+        data = data.replace(RegEx.MATCH_STYLE_TAG, "");
+
+        // REMOVE ALL EMPTY LINES BECAUSE THE FORMATTING IS ALREADY GONE ANYWAYS
+        // stackoverflow.com/a/31413269
+        data = data.replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm, "");
+
+        // REPLACE ALL CLASSES WITH JSX SUPPORTED STYLE PROP
+        // IF YOU WANNA DEBUG THIS HAVE FUN, JUST KNOW IT SPITS OUT THIS: style={{opacity: 0.08, fill: "#E4ECF8"}}
+        styles.map((style) => {
+          let newStyles = style.style.map((s) => {
+            let formattedStyle = s.split(":");
+            // CONVERT TO ARRAY
+            if (isNaN(formattedStyle[1])) {
+              formattedStyle[1] = `"${formattedStyle[1].toString()}"`;
+            } else {
+              formattedStyle[1] = Number(formattedStyle[1]);
+            }
+            return formattedStyle;
+          });
+
+          let formattedStyleString = "style={{";
+          newStyles.map((s, i) => {
+            if (i > 0) formattedStyleString += ", ";
+            formattedStyleString += `${s[0]}: ${s[1]}`;
+          });
+          formattedStyleString += "}}";
+
+          data = data.replaceAll(`class="${style.name}"`, formattedStyleString);
+        });
+
+        for (let i = 0; i < ReplacePropNamesList.length; i++) {
+          let str = ReplacePropNamesList[i];
+          data = data.replaceAll(str[0], str[1]);
+        }
+
+        data = data.replaceAll(RegEx.REMAINING_STYLE, "");
+
+        const result = await prettier.format(constructFinal(data), {
+          parser: "babel",
+        });
+
+        // write to output path
+        if (options.output) {
+          fs.writeFile(options.output, result, (err) => {
+            if (err) {
+              console.error(err);
+            }
+          });
+        }
+
+        // copy to clipboard
+        if (options.copy) {
+          clipboard.writeSync(result);
+        }
+
+        return resolve(result);
+      } catch (Err) {
+        reject(Err);
+      }
+    });
   });
 };
 
