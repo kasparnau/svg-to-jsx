@@ -1,0 +1,23 @@
+name: Node.js CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "✨ Starting job. This job was triggered by ${{ github.event_name }} event."
+
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
+      - run: npm ci
+      - name: "Run tests"
+        run: npm test
