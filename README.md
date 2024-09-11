@@ -1,4 +1,12 @@
-# SVG to JSX converter
+<h1 align="center">
+  SVG to JSX converter
+</h1>
+
+<p align="center">
+  <img alt="" src="https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge&labelColor=000"/>
+  <img alt="" src="https://img.shields.io/github/languages/top/kasparnau/svg-to-jsx?style=for-the-badge&labelColor=000">
+  <img alt="" src="https://img.shields.io/github/license/kasparnau/svg-to-jsx?style=for-the-badge&labelColor=000">
+</p>
 
 ⚡Lightweight CLI utility tool for converting Adobe Illustrator's .svg export files into formatted React .jsx components.
 
