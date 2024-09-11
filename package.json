@@ -1,16 +1,16 @@
 {
   "name": "svg-to-jsx",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "node src/index.js"
   },
-  "author": "",
+  "author": "Kaspar",
   "license": "ISC",
   "dependencies": {
     "boxen": "^7.1.1",
@@ -20,5 +20,6 @@
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3"
   },
-  "type": "module"
+  "type": "module",
+  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
 }

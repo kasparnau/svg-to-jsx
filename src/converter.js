@@ -1,9 +1,8 @@
-import boxen from "boxen";
-import chalk from "chalk";
 import clipboard from "clipboardy";
 import fs from "fs";
 import prettier from "prettier";
-import { program } from "commander";
+
+// RegEx scripts to match styles and attributes from raw svg string
 
 const RegEx = {
   MATCH_STYLE: /st[0-9]{(.*?)\}/g,
@@ -25,7 +24,7 @@ const constructFinal = (data) => {
 
   // encapsulate the svg in a JSX component
   return `export default ({ className }) => {return (
-  ${data})}`;
+    ${data})}`;
 };
 
 const convertSvgToJsx = async (path, options) => {
@@ -115,32 +114,4 @@ const convertSvgToJsx = async (path, options) => {
   });
 };
 
-const usage = boxen("Convert .svg -->.jsx", {
-  title: chalk.green("svg-to-jsx"),
-  titleAlignment: "center",
-  padding: 0.5,
-});
-
-program.name("svg-to-jsx").description(usage).version("1.0.0");
-
-program
-  .command("convert")
-  .description("Convert Illustrator .svg to React-compatible .jsx")
-  .argument("<input>", "path to input .svg file")
-  .option("-o, --output <path>", "export to output path")
-  .option("-c, --copy", "copy to clipboard instead of output")
-  .action(async (input, options) => {
-    if (!options.output && !options.copy) {
-      return program.error(
-        boxen(
-          `${chalk.red("Error:")} You must specify ${chalk.blue(
-            "--output"
-          )} for a file path or ${chalk.blue("--copy")} for clipboard"`
-        )
-      );
-    }
-
-    convertSvgToJsx(input, options);
-  });
-
-program.parse();
+export default convertSvgToJsx;
