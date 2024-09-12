@@ -40,7 +40,7 @@ Motivation: I rather spend an hour building a tool than spend 3 minutes per SVG 
 -   ✨ Unit testing - Vitest
 -   💾 Save to Clipboard or File
 
-## How It Works
+## 🖥️ How It Works
 
 1. Deconstruct the raw SVG file into individual objects using RegEx
 2. Build a React component out of the deconstructed SVG objects
