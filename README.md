@@ -10,7 +10,7 @@
 
 ⚡Lightweight CLI utility tool for converting Adobe Illustrator's .svg export files into formatted React .jsx components.
 
-Motivation: I rather spend an hour building a tool than spend 3 minutes per SVG file doing it manually.
+Motivation: I spent an hour building a tool to avoid spending 3 minutes per SVG doing it manually.
 
 > [!IMPORTANT]
 > This project only supports Adobe Illustrator's svg exports.
