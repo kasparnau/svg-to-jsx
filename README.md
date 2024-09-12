@@ -35,11 +35,3 @@ Motivation: I rather spend an hour building a tool than spend 3 minutes per SVG 
 2. Build a React component out of the deconstructed SVG objects
 3. Format the new React component using Prettier
 4. ✨ Your SVG is ready to be used within your React app
-
-## Example
-- Input: SVG export from Adobe Illustrator
-- Output: Formatted React component
-
-<p align="center">
-  <img src="./img/image.png" alt="Statoscope example" width="100%">
-</p>
