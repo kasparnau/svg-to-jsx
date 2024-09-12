@@ -18,16 +18,27 @@ Motivation: I rather spend an hour building a tool than spend 3 minutes per SVG 
 ## Usage
 
 ```
-    s2j convert [options] <input>
-
-    Arguments:
-        input         path to input .svg file
-
-    Options:
-        -o, --output <path>  export to output path
-        -c, --copy           copy to clipboard instead of output
-        -h, --help           display help for command
+  Usage: svg-to-jsx [options] [command]
+  
+  ┌────── svg-to-jsx ──────┐
+  │ Convert .svg --> .jsx  │
+  └────────────────────────┘
+  
+  Options:
+    -V, --version              output the version number
+    -h, --help                 display help for command
+  
+  Commands:
+    convert [options] <input>  Convert Illustrator .svg to React component
+    help [command]             display help for command
 ```
+
+## ✨ Features
+
+-   ⚡️ Command line interface - Commander
+-   🍿 Colored UI - Chalk
+-   ✨ Unit testing - Vitest
+-   💾 Save to Clipboard or File
 
 ## How It Works
 
@@ -35,3 +46,7 @@ Motivation: I rather spend an hour building a tool than spend 3 minutes per SVG 
 2. Build a React component out of the deconstructed SVG objects
 3. Format the new React component using Prettier
 4. ✨ Your SVG is ready to be used within your React app
+   
+## ✍🏻 Author
+
+Made with ❤️ by Kaspar
