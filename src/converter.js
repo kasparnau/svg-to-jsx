@@ -38,6 +38,12 @@ const convertSvgToJsx = async (path, options = {}) => {
         // GET RID OF THE THE AUTO-GENERATED ILLUSTRATOR COMMENT
         data = data.split(")  -->")[1];
 
+        if (!data) {
+          return reject(
+            "Sorry! This tool only supports SVG's generated from Adobe Illustrator."
+          );
+        }
+
         // GRAB ALL STYLES FROM <style> ELEMENT
         const stylesRaw = data.match(RegEx.MATCH_STYLE);
 

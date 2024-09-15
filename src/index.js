@@ -1,8 +1,8 @@
 import boxen from "boxen";
 import chalk from "chalk";
-import { program } from "commander";
-import data from "./data.js";
 import convertSvgToJsx from "./converter.js";
+import data from "./data.js";
+import { program } from "commander";
 
 // Set up CLI commands with commander, chalk and boxen
 
@@ -31,7 +31,14 @@ program
       );
     }
 
-    convertSvgToJsx(input, options);
+    try {
+      await convertSvgToJsx(input, options);
+      console.log(
+        boxen(`${chalk.green("Finished converting file: ")} ${input}`)
+      );
+    } catch (e) {
+      return program.error(boxen(`${chalk.red("Error:")} ${e}`));
+    }
   });
 
 program.parse();
