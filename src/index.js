@@ -1,6 +1,6 @@
 import boxen from "boxen";
 import chalk from "chalk";
-import convertSvgToJsx from "./converter.js";
+import convertSvgToJsx from "./transform.js";
 import data from "./data.js";
 import { program } from "commander";
 

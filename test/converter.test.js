@@ -1,6 +1,7 @@
 // sum.test.js
+
+import convertSvgToJsx from "../src/transform";
 import fs from "fs";
-import convertSvgToJsx from "../src/converter";
 
 const options = {
   pathToInputFile: "test/sample.svg",
